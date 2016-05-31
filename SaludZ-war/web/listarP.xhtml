@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="List"/></h1>
+                <h:dataTable value="#{personaAdm.personas}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Idpersona"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idpersona}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fechanac"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechanac}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Estatura"/>
+                        </f:facet>
+                        <h:outputText value="#{item.estatura}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Sexo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.sexo}"/>
+                    </h:column>
+                </h:dataTable>
+                <h:commandButton value="Inicio" action="index"/>
+            </h:form>
+        </f:view>
+
+
+    </h:body>
+</html>

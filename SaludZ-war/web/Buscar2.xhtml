@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Idpersona:" for="idpersona" />
+                    <h:outputText id="idpersona" value="#{personaAdm.persona.idpersona}" title="Idpersona" />
+                    <h:outputLabel value="Nombre:" for="nombre" />
+                    <h:outputText id="nombre" value="#{personaAdm.persona.nombre}" title="Nombre" />
+                    <h:outputLabel value="Fechanac:" for="fechanac" />
+                    <h:outputText id="fechanac" value="#{personaAdm.persona.fechanac}" title="Fechanac" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputLabel value="Estatura:" for="estatura" />
+                    <h:outputText id="estatura" value="#{personaAdm.persona.estatura}" title="Estatura" />
+                    <h:outputLabel value="Sexo:" for="sexo" />
+                    <h:outputText id="sexo" value="#{personaAdm.persona.sexo}" title="Sexo" />
+                </h:panelGrid>
+                <h:commandButton value="Editar" action="Editar"/>
+                <h:commandButton value="Eliminar" action="listarP" actionListener="#{personaAdm.borrar}"/>
+              
+            </h:form>
+        </f:view>
+        <h:form>
+              <h:commandButton value="AgregarSignosVitales" disabled="#{personaAdm.sePuedeSignoVitales}" action="sivi" actionListener="#{personaAdm.creaSignosVitales}"/>
+                <h:commandButton value="Historial" action="listarSV" actionListener="#{personaAdm.listaSignosDeUnEspecifico}"/>
+                
+            
+        </h:form>
+        <h:form>
+            
+          
+       </h:form>
+    </h:body>
+</html>
