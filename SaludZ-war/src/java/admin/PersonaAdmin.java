@@ -40,6 +40,8 @@ public class PersonaAdmin implements Serializable {
     private static int nr;
     private List<Persona> personas;
     private int objeto;
+    private int idsve;
+    private ArrayList<Integer> listaidsv;
     private ArrayList<Integer> listaObjetos;
     private Date FechaE;
 
@@ -127,10 +129,26 @@ public class PersonaAdmin implements Serializable {
     public void listar(ActionEvent e) {
         personas();
     }
+    
+      public void buscaSigno(ActionEvent e){
+        // BUscar el signo apartir de su id
+      signo =  signosLn.buscar(getIdsve());
+         FacesContext contexto
+                = FacesContext.getCurrentInstance();
+        FacesMessage mensaje;
+        mensaje = new FacesMessage("Buscado " + getIdsve());
+        contexto.addMessage(null, mensaje);
 
+      
+        
+    }
+      
+   
+      
     public void buscar(ActionEvent e) {
         persona = personaLn.buscar(objeto);
         sePuede();
+        
     }
 
     public void sePuede() {
@@ -158,6 +176,7 @@ public class PersonaAdmin implements Serializable {
                 signos.add(todos.get(i));
             }
         }
+        llenaListaSV();
     }
 
     public void buscar_fechas(ActionEvent e) {
@@ -200,9 +219,25 @@ public class PersonaAdmin implements Serializable {
         listaObjetos = new ArrayList<>(personas.size());
         for (int i = 0; i < personas.size(); i++) {
             listaObjetos.add(personas.get(i).getIdpersona());
-        }
+        }       
     }
 
+    public void llenaListaSV() {
+        //Obtener signos
+       // signos = signosLn.listar();
+        //No se su tamaño
+        listaidsv = new ArrayList<>();
+        //Recorrer todos los signos
+        for (int i = 0; i < signos.size(); i++) {
+            // Solo nos interesa de un id de persona en especial
+            if (signos.get(i).getIdpersona().getIdpersona()== getObjeto()) {
+                // llenar el array con los idsv de la persona en concreto ¡Hala Madrid y nada más!
+                listaidsv.add(signos.get(i).getIdsv());
+            }
+        }
+        
+    }
+     
     public Signosvitales getSigno() {
         return signo;
     }
@@ -242,6 +277,7 @@ public class PersonaAdmin implements Serializable {
 
     public void editarSignos(ActionEvent e) {
         signosLn.editar(signo);
+        llenaListaSV();
     }
 
     public void borrarSignos(ActionEvent e) {
@@ -263,5 +299,25 @@ public class PersonaAdmin implements Serializable {
     public void setFechaE(Date FechaE) {
         this.FechaE = FechaE;
     }
+
+    public int getIdsve() {
+        return idsve;
+    }
+
+    public void setIdsve(int idsve) {
+        this.idsve = idsve;
+        
+    }
+
+    public ArrayList<Integer> getListaidsv() {
+        return listaidsv;
+    }
+
+    public void setListaidsv(ArrayList<Integer> listaidsv) {
+        this.listaidsv = listaidsv;
+    }
+    
+    
+  
 
 }

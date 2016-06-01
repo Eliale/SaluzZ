@@ -8,12 +8,8 @@
     </h:head>
     <h:body>
         <f:view>
-
-     
-
-
                 <h:form>
-                    <h1><h:outputText value="List"/></h1>
+                    <h1><h:outputText value="#{personaAdm.persona.nombre}"/></h1>
                     <h:dataTable value="#{personaAdm.signos}" var="item">
                         <h:column>
                             <f:facet name="header">
@@ -47,17 +43,51 @@
                             </f:facet>
                             <h:outputText value="#{item.peso}"/>
                         </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Idper"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idpersona.idpersona}"/>
-                        </h:column>
                     </h:dataTable>
-                      <h:commandButton value="Inicio" action="index"/>
-                </h:form>
+            </h:form>
             </f:view>
+            
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Edita"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Idsv:" for="idsv" />
+                    <h:selectOneListbox id="idsv" size="1" 
+                                        value="#{personaAdm.idsve}">
+                        <f:selectItems value="#{personaAdm.listaidsv}" />
+                        <h:commandButton value="GO" actionListener="#{personaAdm.buscaSigno}"/>          
+            
+                    </h:selectOneListbox>
+                    
+                </h:panelGrid>             
+            </h:form>
+        </f:view>
 
+        <f:view>
+            <h:form>               
+                <h:panelGrid columns="2">             
+                    <h:outputLabel value="Fecha:" for="fecha" />
+                    <h:inputText id="fecha" value="#{personaAdm.signo.fecha}" title="Fecha" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="Presiond:" for="presiond" />
+                    <h:inputText id="presiond" value="#{personaAdm.signo.presiond}" title="Presiond" />
+                    <h:outputLabel value="Presions:" for="presions" />
+                    <h:inputText id="presions" value="#{personaAdm.signo.presions}" title="Presions" />
+                    <h:outputLabel value="Peso:" for="peso" />
+                    <h:inputText id="peso" value="#{personaAdm.signo.peso}" title="Peso" />
+                    <h:outputLabel value="Idpersona:"/>
+                    <h:outputLabel id="idpersona" value="#{personaAdm.objeto}" />
+                    
+                </h:panelGrid>
+                <h:commandButton value="Guardar cambios" actionListener="#{personaAdm.editarSignos}"/>          
+                <h:commandButton value="Inicio" action="index"/>          
+      
+            </h:form>
+             
+        </f:view>
+
+        
 
     </h:body>
 </html>
