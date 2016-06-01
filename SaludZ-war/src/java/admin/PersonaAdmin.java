@@ -129,26 +129,26 @@ public class PersonaAdmin implements Serializable {
     public void listar(ActionEvent e) {
         personas();
     }
-    
-      public void buscaSigno(ActionEvent e){
+
+    public void buscaSigno(ActionEvent e) {
         // BUscar el signo apartir de su id
-      signo =  signosLn.buscar(getIdsve());
-         FacesContext contexto
+        signo = signosLn.buscar(getIdsve());
+        FacesContext contexto
                 = FacesContext.getCurrentInstance();
         FacesMessage mensaje;
         mensaje = new FacesMessage("Buscado " + getIdsve());
         contexto.addMessage(null, mensaje);
 
-      
-        
     }
-      
-   
-      
+
+    public void clean() {
+        signo = null;
+    }
+
     public void buscar(ActionEvent e) {
         persona = personaLn.buscar(objeto);
         sePuede();
-        
+
     }
 
     public void sePuede() {
@@ -219,25 +219,25 @@ public class PersonaAdmin implements Serializable {
         listaObjetos = new ArrayList<>(personas.size());
         for (int i = 0; i < personas.size(); i++) {
             listaObjetos.add(personas.get(i).getIdpersona());
-        }       
+        }
     }
 
     public void llenaListaSV() {
         //Obtener signos
-       // signos = signosLn.listar();
+        // signos = signosLn.listar();
         //No se su tamaño
         listaidsv = new ArrayList<>();
         //Recorrer todos los signos
         for (int i = 0; i < signos.size(); i++) {
             // Solo nos interesa de un id de persona en especial
-            if (signos.get(i).getIdpersona().getIdpersona()== getObjeto()) {
+            if (signos.get(i).getIdpersona().getIdpersona() == getObjeto()) {
                 // llenar el array con los idsv de la persona en concreto ¡Hala Madrid y nada más!
                 listaidsv.add(signos.get(i).getIdsv());
             }
         }
-        
+
     }
-     
+
     public Signosvitales getSigno() {
         return signo;
     }
@@ -276,8 +276,26 @@ public class PersonaAdmin implements Serializable {
     }
 
     public void editarSignos(ActionEvent e) {
-        signosLn.editar(signo);
-        llenaListaSV();
+        FacesContext contexto
+                = FacesContext.getCurrentInstance();
+        FacesMessage mensaje ;
+        mensaje = new FacesMessage("Registro editado"); 
+        
+        if (fecha_viable(signo.getFecha())) {
+            signosLn.editar(signo);
+        }
+        else{
+           mensaje = new FacesMessage("Fecha incorrecta " + signo.getFecha() + " no editado"); 
+        }
+        
+        contexto.addMessage(null, mensaje);
+       
+    }
+
+    public boolean fecha_viable(Date fecha) {
+        Date hoy = new Date();
+        return hoy.getYear() >= fecha.getYear() && hoy.getMonth() >= fecha.getMonth() && hoy.getDay()-1 >= fecha.getDay();
+
     }
 
     public void borrarSignos(ActionEvent e) {
@@ -306,7 +324,7 @@ public class PersonaAdmin implements Serializable {
 
     public void setIdsve(int idsve) {
         this.idsve = idsve;
-        
+
     }
 
     public ArrayList<Integer> getListaidsv() {
@@ -316,8 +334,5 @@ public class PersonaAdmin implements Serializable {
     public void setListaidsv(ArrayList<Integer> listaidsv) {
         this.listaidsv = listaidsv;
     }
-    
-    
-  
 
 }
