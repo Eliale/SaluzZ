@@ -3,34 +3,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        
-        <f:view>
+    <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                    template="./templates/indextemplates.xhtml">
+        <ui:define name="top">
+            SISTEMA DE SALUD
+        </ui:define>
+        <ui:define name="content">
 
 
             <h:form>
-                <h1><h:outputText value="Create/Edit"/></h1>
+                <h1><h:outputText value="Buscar persona por ID"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Idpersona:" for="idpersona" />
                     <h:selectOneListbox id="idpersona" size="1" 
                                         value="#{personaAdm.objeto}">
                         <f:selectItems value="#{personaAdm.listaObjetos}" />
                     </h:selectOneListbox>
-                                    </h:panelGrid>
+                </h:panelGrid>
                 <h:commandButton value="Buscar" action="Buscar2" actionListener="#{personaAdm.buscar}"/>
                 <h:commandButton value="Inicio" action="index"/> 
             </h:form>
-        </f:view>
 
-    </h:body>
+        </ui:define>
+
+        <ui:define name="bottom">
+            SAlinas eli
+        </ui:define>
+
+    </ui:composition>
 </html>
-<!--
-<h:outputLabel value="Idpersona:"/>
-<h:selectOneListbox id="idpersona" size="1"   value="#" tabindex="">
-                     <f:selectItems value="#"/>
- </f:selectItems>
-</h:selectOneListbox>
--->

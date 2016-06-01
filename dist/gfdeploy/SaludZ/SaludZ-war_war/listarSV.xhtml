@@ -3,10 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+    <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                    template="./templates/indextemplates.xhtml">
+        <ui:define name="top">
+            SISTEMA DE SALUD
+        </ui:define>
+        <ui:define name="content">
+        
         <f:view>
                 <h:form>
                     <h1><h:outputText value="#{personaAdm.persona.nombre}"/></h1>
@@ -87,7 +90,11 @@
              
         </f:view>
 
-        
+        </ui:define>
 
-    </h:body>
+        <ui:define name="bottom">
+            SAlinas eli
+        </ui:define>
+
+    </ui:composition>
 </html>

@@ -195,7 +195,7 @@ public class PersonaAdmin implements Serializable {
         for (int i = 0; i < todos.size(); i++) {
             int anio = todos.get(i).getFecha().getYear();
             int mes = todos.get(i).getFecha().getMonth();
-            int dia = todos.get(i).getFecha().getDay() - 1;
+            int dia = todos.get(i).getFecha().getDay();
 
             if (anio == getFechaE().getYear() && mes == getFechaE().getMonth() && dia == getFechaE().getDay()) {
 
@@ -294,7 +294,7 @@ public class PersonaAdmin implements Serializable {
 
     public boolean fecha_viable(Date fecha) {
         Date hoy = new Date();
-        return hoy.getYear() >= fecha.getYear() && hoy.getMonth() >= fecha.getMonth() && hoy.getDay()-1 >= fecha.getDay();
+        return hoy.getYear() >= fecha.getYear() && hoy.getMonth() >= fecha.getMonth() && hoy.getDay() >= fecha.getDay();
 
     }
 
