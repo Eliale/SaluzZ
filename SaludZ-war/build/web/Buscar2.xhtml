@@ -11,7 +11,7 @@
         <ui:define name="content">
 
             <h:form>
-                <h1><h:outputText value="Create/Edit"/></h1>
+                <h1><h:outputText value="Persona "/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Idpersona:" for="idpersona" />
                     <h:outputText id="idpersona" value="#{personaAdm.persona.idpersona}" title="Idpersona" />
@@ -30,7 +30,7 @@
                 <h:commandButton value="Eliminar" action="listarP" actionListener="#{personaAdm.borrar}"/>
 
             </h:form>
-            
+
             <h:form>
                 <h:commandButton value="AgregarSignosVitales" disabled="#{personaAdm.sePuedeSignoVitales}" action="sivi" actionListener="#{personaAdm.creaSignosVitales}"/>
                 <h:commandButton value="Historial" action="listarSV" actionListener="#{personaAdm.listaSignosDeUnEspecifico}"/>
@@ -45,7 +45,7 @@
         </ui:define>
 
         <ui:define name="bottom">
-            SAlinas eli
+            Eli Alejandro Salinas Perez
         </ui:define>
 
     </ui:composition>

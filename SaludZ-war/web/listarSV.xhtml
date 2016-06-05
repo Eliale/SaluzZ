@@ -13,7 +13,7 @@
         <f:view>
                 <h:form>
                     <h1><h:outputText value="#{personaAdm.persona.nombre}"/></h1>
-                    <h:dataTable value="#{personaAdm.signos}" var="item">
+                    <h:dataTable value="#{personaAdm.signos}" var="item" border="1">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Idsv"/>
@@ -84,16 +84,23 @@
                     
                 </h:panelGrid>
                 <h:commandButton value="Guardar cambios" actionListener="#{personaAdm.editarSignos}"/>          
-                <h:commandButton value="Inicio" action="index" />          
+                      
       
             </h:form>
              
         </f:view>
+            
+            <f:view>
+                <h:form>
+                    <h:commandButton value="Inicio" action="index" actionListener="#{personaAdm.clean()}" />   
+                </h:form>
+            </f:view>
+
 
         </ui:define>
 
         <ui:define name="bottom">
-            SAlinas eli
+            Eli Alejandro Salinas Perez
         </ui:define>
 
     </ui:composition>

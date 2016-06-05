@@ -12,8 +12,8 @@
 
             <f:view>
                 <h:form>
-                    <h1><h:outputText value="#{personaAdm.persona.nombre}"/></h1>
-                    <h:dataTable value="#{personaAdm.signos}" var="item">
+                    <h1><h:outputText value="Todos los registros"/></h1>
+                    <h:dataTable value="#{personaAdm.signos}" var="item" border="1">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Idsv"/>
@@ -46,6 +46,12 @@
                             </f:facet>
                             <h:outputText value="#{item.peso}"/>
                         </h:column>
+                          <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Persona"/>
+                            </f:facet>
+                              <h:outputText value="#{item.idpersona.nombre}"/>
+                        </h:column>
                     </h:dataTable>
                      <h:commandButton value="Inicio" action="index" />    
                 </h:form>
@@ -59,7 +65,7 @@
         </ui:define>
 
         <ui:define name="bottom">
-            SAlinas eli
+            Eli Alejandro Salinas Perez
         </ui:define>
 
     </ui:composition>

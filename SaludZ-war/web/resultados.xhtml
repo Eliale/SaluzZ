@@ -11,7 +11,7 @@
         <ui:define name="content">
             <h:form>
                 <h1><h:outputText value="List"/></h1>
-                <h:dataTable value="#{personaAdm.signos}" var="item">
+                <h:dataTable value="#{personaAdm.signos}" var="item" border="1">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Idsv"/>
@@ -46,9 +46,9 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Idper"/>
+                            <h:outputText value="Nombre de Persona"/>
                         </f:facet>
-                        <h:outputText value="#{item.idpersona.idpersona}"/>
+                        <h:outputText value="#{item.idpersona.nombre}"/>
                     </h:column>
                 </h:dataTable>
                 <h:commandButton value="Inicio" action="index"/>
@@ -56,7 +56,7 @@
         </ui:define>
 
         <ui:define name="bottom">
-            SAlinas eli
+            Eli Alejandro Salinas Perez
         </ui:define>
 
     </ui:composition>

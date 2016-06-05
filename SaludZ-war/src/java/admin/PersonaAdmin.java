@@ -32,7 +32,7 @@ public class PersonaAdmin implements Serializable {
     private SignosLn signosLn;
     private Signosvitales signo;
     private List<Signosvitales> signos;
-    private static boolean sePuedeSignoVitales;
+    private boolean sePuedeSignoVitales;
 
     @EJB
     private PersonaLn personaLn;
@@ -43,9 +43,12 @@ public class PersonaAdmin implements Serializable {
     private int idsve;
     private ArrayList<Integer> listaidsv;
     private ArrayList<Integer> listaObjetos;
+     private ArrayList<Integer> listaIMC;
     private Date FechaE;
+    private Date now;
 
     public PersonaAdmin() {
+        sePuedeSignoVitales = false;
     }
 
     public int getObjeto() {
@@ -121,7 +124,7 @@ public class PersonaAdmin implements Serializable {
         limpiar(e);
 
     }
-
+    
     public void limpiar(ActionEvent e) {
         creaPersona(e);
     }
@@ -143,6 +146,7 @@ public class PersonaAdmin implements Serializable {
 
     public void clean() {
         signo = null;
+        signos = null;
     }
 
     public void buscar(ActionEvent e) {
@@ -154,15 +158,19 @@ public class PersonaAdmin implements Serializable {
     public void sePuede() {
         signos = signosLn.listar();
         Date hoy = new Date();
+        setNow(hoy);
         Date fecha;
         for (int i = 0; i < signos.size(); i++) {
-            if (signos.get(i).getIdpersona().equals(persona)) {
+            // Pertenecen a una persona
+            if (signos.get(i).getIdpersona().getIdpersona() == getPersona().getIdpersona()) {
                 fecha = signos.get(i).getFecha();
                 if (hoy.getDay() == fecha.getDay() && hoy.getMonth() == fecha.getMonth() && hoy.getYear() == fecha.getYear()) {
                     setSePuedeSignoVitales(true);
                 } else {
                     setSePuedeSignoVitales(false);
                 }
+            } else {
+                setSePuedeSignoVitales(false);
             }
 
         }
@@ -178,7 +186,18 @@ public class PersonaAdmin implements Serializable {
         }
         llenaListaSV();
     }
-
+    
+    
+    public  ArrayList<Integer> imcs(){
+      
+        
+        
+        
+        
+        
+        
+        return null;  
+    }
     public void buscar_fechas(ActionEvent e) {
         busca_fecha_es();
     }
@@ -210,8 +229,30 @@ public class PersonaAdmin implements Serializable {
     }
 
     public void borrar(ActionEvent e) {
+        
+        if(se_puede_borrar_p(persona.getIdpersona())){
         personaLn.borrar(persona);
+        }
         listar(e);
+    }
+    
+    public boolean se_puede_borrar_p(int idp){
+        boolean es_posible = true;
+               FacesContext contexto
+                = FacesContext.getCurrentInstance();
+        FacesMessage mensaje;
+        mensaje = new FacesMessage("Registro borrado con exito");
+        
+        for (int i = 0; i < signos.size(); i++) {
+            if(signos.get(i).getIdpersona().getIdpersona() == getObjeto()){
+                es_posible = false;
+                mensaje = new FacesMessage("NO es posible borrar personas ya que existen REGISTROS DE SIGNOS" );
+            }
+            
+        }    
+        
+         contexto.addMessage(null, mensaje);
+        return es_posible;
     }
 
     public void llenaLista() {
@@ -250,8 +291,8 @@ public class PersonaAdmin implements Serializable {
         return sePuedeSignoVitales;
     }
 
-    public static void setSePuedeSignoVitales(boolean sePuedeSignoVitales) {
-        PersonaAdmin.sePuedeSignoVitales = sePuedeSignoVitales;
+    public void setSePuedeSignoVitales(boolean sePuedeSignoVitales) {
+        this.sePuedeSignoVitales = sePuedeSignoVitales;
     }
 
     public List<Signosvitales> getSignos() {
@@ -268,28 +309,56 @@ public class PersonaAdmin implements Serializable {
 
     public void agregarSigno(ActionEvent e) {
         //sePuedeSignoVitales = false;
+
+        FacesContext contexto
+                = FacesContext.getCurrentInstance();
+        FacesMessage mensaje;
+
         signo.setIdpersona(persona);
         signo.setFecha(new Date());
-        signosLn.agregar(signo);
+        // vamo a validar
 
-        listarSignos(e);
+        if (fecha_de_signo_viable(signo.getFecha())) {
+            signosLn.agregar(signo);
+            mensaje = new FacesMessage("Nuevo registro agregado Fecha: " + signo.getFecha());
+        } else {
+            mensaje = new FacesMessage("Registro no agregado Fecha: " + signo.getFecha());
+        }
+
+        contexto.addMessage(null, mensaje);
+        // listarSignos(e);
+    }
+
+    public boolean fecha_de_signo_viable(Date d) {
+        boolean permitido = true;
+        for (int i = 0; i < signos.size(); i++) {
+            Signosvitales signosvitales = signos.get(i);
+            // vamo a fijarnos que solo sea una persona
+            if(signos.get(i).getIdpersona().getIdpersona()== getObjeto()){
+                Date fecha = signos.get(i).getFecha();
+                // vamo a fijarnos de la fecha
+                if(fecha.getDay() == d.getDay() && fecha.getMonth() == d.getMonth() &&  fecha.getYear() == d.getYear()){
+                    permitido =  false;
+                }
+            }
+        }
+        return permitido;
     }
 
     public void editarSignos(ActionEvent e) {
         FacesContext contexto
                 = FacesContext.getCurrentInstance();
-        FacesMessage mensaje ;
-        mensaje = new FacesMessage("Registro editado"); 
-        
+        FacesMessage mensaje;
+        mensaje = new FacesMessage("Registro editado");
+
         if (fecha_viable(signo.getFecha())) {
             signosLn.editar(signo);
+        } else {
+            mensaje = new FacesMessage("Fecha incorrecta " + signo.getFecha() + " no editado");
         }
-        else{
-           mensaje = new FacesMessage("Fecha incorrecta " + signo.getFecha() + " no editado"); 
-        }
-        
+
         contexto.addMessage(null, mensaje);
-       
+
     }
 
     public boolean fecha_viable(Date fecha) {
@@ -333,6 +402,14 @@ public class PersonaAdmin implements Serializable {
 
     public void setListaidsv(ArrayList<Integer> listaidsv) {
         this.listaidsv = listaidsv;
+    }
+
+    public Date getNow() {
+        return now;
+    }
+
+    public void setNow(Date now) {
+        this.now = now;
     }
 
 }

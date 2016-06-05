@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                     template="./templates/indextemplates.xhtml">
         <ui:define name="top">
@@ -9,29 +10,39 @@
         </ui:define>
         <ui:define name="content">
             <h:form>
-                <h1><h:outputText value="Create/Edit"/></h1>
+                <h1><h:outputText value="#{personaAdm.persona.nombre}"/></h1>
                 <h:panelGrid columns="2">
-                   
+                   <h:outputLabel value="Fecha:" />
+                   <h:outputText value="#{personaAdm.now}" />
                     <h:outputLabel value="Presiond:" for="presiond" />
-                    <h:inputText id="presiond" value="#{personaAdm.signo.presiond}" title="Presiond" />
+                    <h:inputText id="presiond" value="#{personaAdm.signo.presiond}" title="Presiond" 
+                                 validatorMessage="Presion entre 80 y 129">
+                        <f:validateLongRange minimum="80" maximum="120"></f:validateLongRange>                    
+                    </h:inputText>
+                    
                     <h:outputLabel value="Presions:" for="presions" />
-                    <h:inputText id="presions" value="#{personaAdm.signo.presions}" title="Presions" />
+                    <h:inputText id="presions" value="#{personaAdm.signo.presions}" title="Presions" 
+                                 validatorMessage="Presion entre 80 y 129">
+                        <f:validateLongRange minimum="80" maximum="120"></f:validateLongRange>                    
+                    </h:inputText>
                     <h:outputLabel value="Peso:" for="peso" />
                     <h:inputText id="peso" value="#{personaAdm.signo.peso}" title="Peso" />
                     
                     
                 </h:panelGrid>
-                <h:commandButton value="Aceptar" action="listarSV" actionListener="#{personaAdm.agregarSigno}"/>
-                
+                <h:commandButton value="Aceptar" action="index" actionListener="#{personaAdm.agregarSigno}"/>
+                <h:commandButton value="Cancelar" action="index" actionListener="#{personaAdm.clean()}"/>
             </h:form>
-        </f:view>
-        <h:form><h:commandButton value="Cancelar" action="index"/>
-   </h:form>
+       
+        
+       
+            
+  
         
          </ui:define>
 
         <ui:define name="bottom">
-            SAlinas eli
+            Eli Alejandro Salinas Perez
         </ui:define>
 
     </ui:composition>
